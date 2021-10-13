@@ -100,7 +100,25 @@
 					"pdf = df.toPandas()\r\n",
 					"print(pdf)"
 				],
-				"execution_count": 19
+				"execution_count": 31
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"pdf"
+				],
+				"execution_count": 32
 			},
 			{
 				"cell_type": "code",
@@ -136,9 +154,28 @@
 					}
 				},
 				"source": [
-					"final_list"
+					"pdf.drop('userPrincipalName',1,inplace=True)\r\n",
+					"pdf['userPrincipalName'] = final_list"
 				],
-				"execution_count": 23
+				"execution_count": 33
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"pdf"
+				],
+				"execution_count": 34
 			},
 			{
 				"cell_type": "markdown",
