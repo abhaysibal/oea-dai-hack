@@ -1,0 +1,33 @@
+{
+	"$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+	"contentVersion": "1.0.0.0",
+	"parameters": {
+		"workspaceName": {
+			"value": "syn-oea-daihackathon"
+		},
+		"syn-oea-daihackathon-WorkspaceDefaultSqlServer_connectionString": {
+			"value": ""
+		},
+		"AzureBlobStorage_properties_typeProperties_serviceEndpoint": {
+			"value": "https://stoeadaihackathon.blob.core.windows.net"
+		},
+		"GraphVault_properties_typeProperties_baseUrl": {
+			"value": "https://kv-oea-daihackathon.vault.azure.net/"
+		},
+		"Microsoft Graph_properties_typeProperties_url": {
+			"value": "https://graph.microsoft.com/beta"
+		},
+		"Microsoft Graph_properties_typeProperties_servicePrincipalId": {
+			"value": "9ba597aa-96e0-4297-80ac-9ce9fe9c7504"
+		},
+		"Microsoft Graph_properties_typeProperties_tenant": {
+			"value": "5168b241-50f5-4d78-8cc7-890e07dbb940"
+		},
+		"Microsoft Graph_properties_typeProperties_aadResourceId": {
+			"value": "https://graph.microsoft.com"
+		},
+		"syn-oea-daihackathon-WorkspaceDefaultStorage_properties_typeProperties_url": {
+			"value": "https://stoeadaihackathon.dfs.core.windows.net"
+		}
+	}
+}
