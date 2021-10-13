@@ -97,8 +97,7 @@
 				"source": [
 					"adls_path='abfss://%s@%s.dfs.core.windows.net/%s'%(\"stage1np\",\"stoeadaihackathon\",\"/m365/AAD/users\")\r\n",
 					"df=spark.read.option('header','true').option('delimiter',',').csv(adls_path+'/devices.csv')\r\n",
-					"pdf = df.toPandas()\r\n",
-					"print(pdf)"
+					"pdf = df.toPandas()"
 				],
 				"execution_count": 31
 			},
@@ -116,48 +115,12 @@
 					}
 				},
 				"source": [
-					"pdf"
-				],
-				"execution_count": 32
-			},
-			{
-				"cell_type": "code",
-				"metadata": {
-					"jupyter": {
-						"source_hidden": false,
-						"outputs_hidden": false
-					},
-					"nteract": {
-						"transient": {
-							"deleting": false
-						}
-					}
-				},
-				"source": [
 					"listOfdomain = pdf['userPrincipalName']\r\n",
 					"final_list = list(map(lambda x: check(x) ,listOfdomain ))\r\n",
-					""
-				],
-				"execution_count": 22
-			},
-			{
-				"cell_type": "code",
-				"metadata": {
-					"jupyter": {
-						"source_hidden": false,
-						"outputs_hidden": false
-					},
-					"nteract": {
-						"transient": {
-							"deleting": false
-						}
-					}
-				},
-				"source": [
 					"pdf.drop('userPrincipalName',1,inplace=True)\r\n",
 					"pdf['userPrincipalName'] = final_list"
 				],
-				"execution_count": 33
+				"execution_count": 22
 			},
 			{
 				"cell_type": "code",
