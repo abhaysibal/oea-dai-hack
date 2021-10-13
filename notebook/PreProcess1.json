@@ -167,9 +167,74 @@
 					}
 				},
 				"source": [
-					"pdf.to_csv('abfss://stage1np@stoeadaihackathon.dfs.core.windows.net//m365/AAD/users/devicesprerocess.csv')"
+					"import pandas as pd\r\n",
+					"  \r\n",
+					"# reading the csv file\r\n",
+					"df = pd.read_csv(\"AllDetails.csv\")\r\n",
+					"  \r\n",
+					"# updating the column value/data\r\n",
+					"df['Status'] = df['Status'].replace({'P': 'A'})\r\n",
+					"  \r\n",
+					"# writing into the file\r\n",
+					"df.to_csv(\"AllDetails.csv\", index=False)\r\n",
+					"  \r\n",
+					"print(df)"
 				],
-				"execution_count": 47
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					""
+				],
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					""
+				],
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"pdf.to_csv(\"abfss://stage1np@stoeadaihackathon.dfs.core.windows.net//m365/AAD/users/devicesprerocess.csv\")"
+				],
+				"execution_count": 48
 			},
 			{
 				"cell_type": "markdown",
