@@ -18,6 +18,9 @@
 				"fileSystem": "stage1np"
 			}
 		},
-		"schema": {}
+		"schema": {},
+		"headers": {
+			"Content-Type": "application/json"
+		}
 	}
 }
