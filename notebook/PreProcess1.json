@@ -90,11 +90,11 @@
 					}
 				},
 				"source": [
-					"adls_path='abfss://%s@%s.dfs.core.windows.net/%s'%(\"stage1np\",\"stoeadaihackathon\",\"/m365/AAD/users\")\r\n",
+					"adls_path='abfss://%s@%s.dfs.core.windows.net/%s'%(\"stage1np\",\"stoeadaihackathon\",\"m365/AAD/users\")\r\n",
 					"df=spark.read.option('header','true').option('delimiter',',').csv(adls_path+'/devices.csv')\r\n",
 					"pdf = df.toPandas()"
 				],
-				"execution_count": 37
+				"execution_count": 50
 			},
 			{
 				"cell_type": "code",
@@ -115,7 +115,7 @@
 					"pdf.drop('userPrincipalName',1,inplace=True)\r\n",
 					"pdf['userPrincipalName'] = final_list"
 				],
-				"execution_count": 38
+				"execution_count": 51
 			},
 			{
 				"cell_type": "code",
@@ -133,7 +133,7 @@
 				"source": [
 					"pdf"
 				],
-				"execution_count": 39
+				"execution_count": 52
 			},
 			{
 				"cell_type": "code",
@@ -151,7 +151,7 @@
 				"source": [
 					"adls_path"
 				],
-				"execution_count": 44
+				"execution_count": 53
 			},
 			{
 				"cell_type": "code",
@@ -167,74 +167,9 @@
 					}
 				},
 				"source": [
-					"import pandas as pd\r\n",
-					"  \r\n",
-					"# reading the csv file\r\n",
-					"df = pd.read_csv(\"AllDetails.csv\")\r\n",
-					"  \r\n",
-					"# updating the column value/data\r\n",
-					"df['Status'] = df['Status'].replace({'P': 'A'})\r\n",
-					"  \r\n",
-					"# writing into the file\r\n",
-					"df.to_csv(\"AllDetails.csv\", index=False)\r\n",
-					"  \r\n",
-					"print(df)"
+					"pdf.to_csv('abfss://stage1np@stoeadaihackathon.dfs.core.windows.net/m365/AAD/users/devicesprerocess.csv')"
 				],
-				"execution_count": null
-			},
-			{
-				"cell_type": "code",
-				"metadata": {
-					"jupyter": {
-						"source_hidden": false,
-						"outputs_hidden": false
-					},
-					"nteract": {
-						"transient": {
-							"deleting": false
-						}
-					}
-				},
-				"source": [
-					""
-				],
-				"execution_count": null
-			},
-			{
-				"cell_type": "code",
-				"metadata": {
-					"jupyter": {
-						"source_hidden": false,
-						"outputs_hidden": false
-					},
-					"nteract": {
-						"transient": {
-							"deleting": false
-						}
-					}
-				},
-				"source": [
-					""
-				],
-				"execution_count": null
-			},
-			{
-				"cell_type": "code",
-				"metadata": {
-					"jupyter": {
-						"source_hidden": false,
-						"outputs_hidden": false
-					},
-					"nteract": {
-						"transient": {
-							"deleting": false
-						}
-					}
-				},
-				"source": [
-					"pdf.to_csv(\"abfss://stage1np@stoeadaihackathon.dfs.core.windows.net//m365/AAD/users/devicesprerocess.csv\")"
-				],
-				"execution_count": 48
+				"execution_count": 54
 			},
 			{
 				"cell_type": "markdown",
