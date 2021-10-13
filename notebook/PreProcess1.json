@@ -94,7 +94,7 @@
 					"df=spark.read.option('header','true').option('delimiter',',').csv(adls_path+'/devices.csv')\r\n",
 					"pdf = df.toPandas()"
 				],
-				"execution_count": null
+				"execution_count": 2
 			},
 			{
 				"cell_type": "code",
