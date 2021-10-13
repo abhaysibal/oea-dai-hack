@@ -52,7 +52,7 @@
 				"source": [
 					"import re"
 				],
-				"execution_count": null
+				"execution_count": 4
 			},
 			{
 				"cell_type": "code",
@@ -95,7 +95,7 @@
 					"\r\n",
 					"dataframe1.show()"
 				],
-				"execution_count": 28
+				"execution_count": 5
 			},
 			{
 				"cell_type": "code",
