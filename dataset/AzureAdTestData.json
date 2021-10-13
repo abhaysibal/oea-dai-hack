@@ -1,0 +1,46 @@
+{
+	"name": "AzureAdTestData",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "AzureBlobStorage",
+			"type": "LinkedServiceReference"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobStorageLocation",
+				"fileName": "devicesInfo.json",
+				"container": "test-data"
+			}
+		},
+		"schema": {
+			"type": "object",
+			"properties": {
+				"@odata.context": {
+					"type": "string"
+				},
+				"value": {
+					"type": "array",
+					"items": {
+						"type": "object",
+						"properties": {
+							"id": {
+								"type": "string"
+							},
+							"deviceId": {
+								"type": "string"
+							},
+							"model": {
+								"type": "string"
+							},
+							"operatingSystem": {
+								"type": "string"
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+}
