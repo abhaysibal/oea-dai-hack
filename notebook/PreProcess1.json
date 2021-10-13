@@ -68,20 +68,18 @@
 					}
 				},
 				"source": [
-					"regex = '^[a-z0-9]+[\\._]?[a-z0-9]+[@]contoso.com$'  \r\n",
-					"  \r\n",
-					"def check(email):   \r\n",
-					"  \r\n",
+					"def check(email):\r\n",
+					"    regex = '^[a-z0-9]+[\\._]?[a-z0-9]+[@]contoso.com$'     \r\n",
 					"    if(re.search(regex,email)):   \r\n",
-					"        print(\"Valid Email\")   \r\n",
-					"    else:   \r\n",
-					"        print(\"Invalid Email\")   \r\n",
-					"      \r\n",
+					"        return email   \r\n",
+					"    else:\r\n",
+					"        email.split('@')[0]\r\n",
+					"        email = email.split('@')[0]+\"@contoso.com\"\r\n",
+					"        return email\r\n",
 					"\r\n",
-					"      \r\n",
-					"   "
+					"        "
 				],
-				"execution_count": 5
+				"execution_count": 12
 			},
 			{
 				"cell_type": "code",
@@ -97,37 +95,83 @@
 					}
 				},
 				"source": [
-					"email = \"rohit.gupta@mcnsolutions.net\"  \r\n",
-					"check(email)   \r\n",
-					"  \r\n",
-					"email = \"praveen@c-sharpcorner.com\"  \r\n",
-					"check(email)   \r\n",
-					"  \r\n",
-					"email = \"inform2atul@gmail.com\"  \r\n",
-					"check(email)   "
-				],
-				"execution_count": 6
-			},
-			{
-				"cell_type": "code",
-				"metadata": {
-					"jupyter": {
-						"source_hidden": false,
-						"outputs_hidden": false
-					},
-					"nteract": {
-						"transient": {
-							"deleting": false
-						}
-					}
-				},
-				"source": [
-					"email = \"rohit.gupta@mcnsolutions.net\"  \r\n",
+					"email = \"ablain@win-edu.org\"  \r\n",
 					"email.split('@')[0]\r\n",
 					"email = email.split('@')[0]+\"@contoso.com\"\r\n",
 					"email"
 				],
-				"execution_count": 9
+				"execution_count": 10
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"listOfdomain = [\"ablain@win-edu.org\",\"abmath@win-edu.org\",\r\n",
+					"\"adbr-teacher@win-edu.org\",\r\n",
+					"\"adbr@win-edu.org\"\r\n",
+					"\"afma@win-edu.org\"\r\n",
+					"]"
+				],
+				"execution_count": 13
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"final_list = list(map(lambda x: check(x) ,listOfdomain ))"
+				],
+				"execution_count": 14
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"final_list"
+				],
+				"execution_count": 15
+			},
+			{
+				"cell_type": "markdown",
+				"metadata": {
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					""
+				]
 			}
 		]
 	}
