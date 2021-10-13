@@ -149,9 +149,27 @@
 					}
 				},
 				"source": [
-					"pdf.to_csv('devicesprerocess.csv')"
+					"adls_path"
 				],
-				"execution_count": 43
+				"execution_count": 44
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"pdf.to_csv('abfss://stage1np@stoeadaihackathon.dfs.core.windows.net//m365/AAD/users/devicesprerocess.csv')"
+				],
+				"execution_count": 47
 			},
 			{
 				"cell_type": "markdown",
