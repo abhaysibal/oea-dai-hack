@@ -18,7 +18,7 @@
 				"secretName": "graphAppClientSecret"
 			},
 			"tenant": "5168b241-50f5-4d78-8cc7-890e07dbb940",
-			"aadResourceId": "https://graph.microsoft.com"
+			"aadResourceId": "https://graph.microsoft.com/beta"
 		},
 		"connectVia": {
 			"referenceName": "AutoResolveIntegrationRuntime",
