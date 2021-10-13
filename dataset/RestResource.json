@@ -8,6 +8,9 @@
 		},
 		"annotations": [],
 		"type": "RestResource",
+		"typeProperties": {
+			"relativeUrl": "users/"
+		},
 		"schema": []
 	}
 }
