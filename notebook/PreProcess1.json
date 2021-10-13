@@ -52,7 +52,30 @@
 				"source": [
 					"import re"
 				],
-				"execution_count": 1
+				"execution_count": null
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					"adls_path='abfss://%s@%s.dfs.core.windows.net/%s'%(\"stage1np\",\"syn-oea-daihackathon\",\"/m365/AAD/users\")\r\n",
+					"\r\n",
+					"\r\n",
+					"dataframe1=spark.read.option('header','true').option('delimiter',',').csv(adls_path+'/devices.csv')\r\n",
+					"\r\n",
+					"dataframe1.show()"
+				],
+				"execution_count": 19
 			},
 			{
 				"cell_type": "code",
