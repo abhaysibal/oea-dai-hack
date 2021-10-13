@@ -1,0 +1,23 @@
+{
+	"name": "DevicesJson",
+	"properties": {
+		"linkedServiceName": {
+			"referenceName": "syn-oea-daihackathon-WorkspaceDefaultStorage",
+			"type": "LinkedServiceReference"
+		},
+		"folder": {
+			"name": "Devices Integration Data (Intune)"
+		},
+		"annotations": [],
+		"type": "Json",
+		"typeProperties": {
+			"location": {
+				"type": "AzureBlobFSLocation",
+				"fileName": "Devices.json",
+				"folderPath": "m365/AAD/Devices",
+				"fileSystem": "stage1np"
+			}
+		},
+		"schema": {}
+	}
+}
