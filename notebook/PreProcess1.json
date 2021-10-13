@@ -68,11 +68,11 @@
 					}
 				},
 				"source": [
-					"dataframe1 = spark.read.load('(\"abfss://stage1np@syn-oea-daihackatho.dfs.core.windows.net/m365/AAD/users/devices.csv\")', format = 'csv',header=True)\r\n",
+					"dataframe1 = spark.read.load('(\"abfss://stage1np@stoeadaihackathon.dfs.core.windows.net/m365/AAD/users/devices.csv\")', format = 'csv',header=True)\r\n",
 					"dataframe1.show(10)\r\n",
 					""
 				],
-				"execution_count": 20
+				"execution_count": 24
 			},
 			{
 				"cell_type": "code",
@@ -88,14 +88,14 @@
 					}
 				},
 				"source": [
-					"adls_path='abfss://%s@%s.dfs.core.windows.net/%s'%(\"stage1np\",\"syn-oea-daihackathon\",\"/m365/AAD/users\")\r\n",
+					"adls_path='abfss://%s@%s.dfs.core.windows.net/%s'%(\"stage1np\",\"stoeadaihackathon\",\"/m365/AAD/users\")\r\n",
 					"\r\n",
 					"\r\n",
 					"dataframe1=spark.read.option('header','true').option('delimiter',',').csv(adls_path+'/devices.csv')\r\n",
 					"\r\n",
 					"dataframe1.show()"
 				],
-				"execution_count": 19
+				"execution_count": 26
 			},
 			{
 				"cell_type": "code",
