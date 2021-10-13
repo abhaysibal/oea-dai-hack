@@ -9,7 +9,7 @@
 		"annotations": [],
 		"type": "RestResource",
 		"typeProperties": {
-			"relativeUrl": "users/"
+			"relativeUrl": "users?$select=givenName,surname,userPrincipalName,id"
 		},
 		"schema": []
 	}
