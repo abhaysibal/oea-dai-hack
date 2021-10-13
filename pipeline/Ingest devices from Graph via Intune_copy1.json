@@ -24,6 +24,9 @@
 						"requestBody": {
 							"value": "{ \n    \"reportName\": \"Devices\", \n    \"select\": [ \n        \"DeviceId\",\n        \"DeviceName\", \n        \"DeviceType\",\n        \"managementAgent\", \n        \"OwnerType\", \n        \"ComplianceState\", \n        \"PrimaryUser\", \n        \"UserId\", \n        \"UPN\", \n        \"UserEmail\", \n        \"UserName\"\n    ]\n} ",
 							"type": "Expression"
+						},
+						"additionalHeaders": {
+							"Content-type": "application/json"
 						}
 					},
 					"sink": {
