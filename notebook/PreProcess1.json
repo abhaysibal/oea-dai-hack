@@ -68,11 +68,18 @@
 					}
 				},
 				"source": [
-					"dataframe1 = spark.read.load('(\"abfss://stage1np@stoeadaihackathon.dfs.core.windows.net/m365/AAD/users/devices.csv\")', format = 'csv',header=True)\r\n",
-					"dataframe1.show(10)\r\n",
-					""
+					"def check(email):\r\n",
+					"    regex = '^[a-z0-9]+[\\._]?[a-z0-9]+[@]contoso.com$'     \r\n",
+					"    if(re.search(regex,email)):   \r\n",
+					"        return email   \r\n",
+					"    else:\r\n",
+					"        email.split('@')[0]\r\n",
+					"        email = email.split('@')[0]+\"@contoso.com\"\r\n",
+					"        return email\r\n",
+					"\r\n",
+					"        "
 				],
-				"execution_count": 24
+				"execution_count": 20
 			},
 			{
 				"cell_type": "code",
@@ -89,13 +96,11 @@
 				},
 				"source": [
 					"adls_path='abfss://%s@%s.dfs.core.windows.net/%s'%(\"stage1np\",\"stoeadaihackathon\",\"/m365/AAD/users\")\r\n",
-					"\r\n",
-					"\r\n",
-					"dataframe1=spark.read.option('header','true').option('delimiter',',').csv(adls_path+'/devices.csv')\r\n",
-					"\r\n",
-					"dataframe1.show()"
+					"df=spark.read.option('header','true').option('delimiter',',').csv(adls_path+'/devices.csv')\r\n",
+					"pdf = df.toPandas()\r\n",
+					"print(pdf)"
 				],
-				"execution_count": 5
+				"execution_count": 19
 			},
 			{
 				"cell_type": "code",
@@ -111,76 +116,11 @@
 					}
 				},
 				"source": [
-					"def check(email):\r\n",
-					"    regex = '^[a-z0-9]+[\\._]?[a-z0-9]+[@]contoso.com$'     \r\n",
-					"    if(re.search(regex,email)):   \r\n",
-					"        return email   \r\n",
-					"    else:\r\n",
-					"        email.split('@')[0]\r\n",
-					"        email = email.split('@')[0]+\"@contoso.com\"\r\n",
-					"        return email\r\n",
-					"\r\n",
-					"        "
+					"listOfdomain = pdf['userPrincipalName']\r\n",
+					"final_list = list(map(lambda x: check(x) ,listOfdomain ))\r\n",
+					""
 				],
-				"execution_count": 12
-			},
-			{
-				"cell_type": "code",
-				"metadata": {
-					"jupyter": {
-						"source_hidden": false,
-						"outputs_hidden": false
-					},
-					"nteract": {
-						"transient": {
-							"deleting": false
-						}
-					}
-				},
-				"source": [
-					"email = \"ablain@win-edu.org\"  \r\n",
-					"email.split('@')[0]\r\n",
-					"email = email.split('@')[0]+\"@contoso.com\"\r\n",
-					"email"
-				],
-				"execution_count": 10
-			},
-			{
-				"cell_type": "code",
-				"metadata": {
-					"jupyter": {
-						"source_hidden": false,
-						"outputs_hidden": false
-					},
-					"nteract": {
-						"transient": {
-							"deleting": false
-						}
-					}
-				},
-				"source": [
-					"listOfdomain = dataframe1['userPrincipalName']\r\n",
-					"println(type(listOfdomain))"
-				],
-				"execution_count": null
-			},
-			{
-				"cell_type": "code",
-				"metadata": {
-					"jupyter": {
-						"source_hidden": false,
-						"outputs_hidden": false
-					},
-					"nteract": {
-						"transient": {
-							"deleting": false
-						}
-					}
-				},
-				"source": [
-					"final_list = list(map(lambda x: check(x) ,listOfdomain ))"
-				],
-				"execution_count": 14
+				"execution_count": 22
 			},
 			{
 				"cell_type": "code",
@@ -198,7 +138,7 @@
 				"source": [
 					"final_list"
 				],
-				"execution_count": 15
+				"execution_count": 23
 			},
 			{
 				"cell_type": "markdown",
