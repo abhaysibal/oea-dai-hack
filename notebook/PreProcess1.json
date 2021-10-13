@@ -49,13 +49,6 @@
 		"cells": [
 			{
 				"cell_type": "code",
-				"source": [
-					"import re"
-				],
-				"execution_count": 4
-			},
-			{
-				"cell_type": "code",
 				"metadata": {
 					"jupyter": {
 						"source_hidden": false,
@@ -68,6 +61,7 @@
 					}
 				},
 				"source": [
+					"import re\r\n",
 					"def check(email):\r\n",
 					"    regex = '^[a-z0-9]+[\\._]?[a-z0-9]+[@]contoso.com$'     \r\n",
 					"    if(re.search(regex,email)):   \r\n",
@@ -79,7 +73,7 @@
 					"\r\n",
 					"        "
 				],
-				"execution_count": 20
+				"execution_count": 36
 			},
 			{
 				"cell_type": "code",
@@ -99,7 +93,7 @@
 					"df=spark.read.option('header','true').option('delimiter',',').csv(adls_path+'/devices.csv')\r\n",
 					"pdf = df.toPandas()"
 				],
-				"execution_count": 31
+				"execution_count": 37
 			},
 			{
 				"cell_type": "code",
@@ -120,7 +114,7 @@
 					"pdf.drop('userPrincipalName',1,inplace=True)\r\n",
 					"pdf['userPrincipalName'] = final_list"
 				],
-				"execution_count": 22
+				"execution_count": 38
 			},
 			{
 				"cell_type": "code",
@@ -138,7 +132,25 @@
 				"source": [
 					"pdf"
 				],
-				"execution_count": 34
+				"execution_count": 39
+			},
+			{
+				"cell_type": "code",
+				"metadata": {
+					"jupyter": {
+						"source_hidden": false,
+						"outputs_hidden": false
+					},
+					"nteract": {
+						"transient": {
+							"deleting": false
+						}
+					}
+				},
+				"source": [
+					""
+				],
+				"execution_count": null
 			},
 			{
 				"cell_type": "markdown",
