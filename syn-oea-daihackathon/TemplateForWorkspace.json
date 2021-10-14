@@ -5457,166 +5457,6 @@
 			"dependsOn": []
 		},
 		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 1')]",
-			"type": "Microsoft.Synapse/workspaces/sqlscripts",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"content": {
-					"query": "SELECT TOP (100) [Id]\n,[FirstName]\n,[MiddleName]\n,[LastName]\n,[GenerationCode]\n,[Prefix]\n,[EnabledUser]\n,[ExternalId]\n,[CreateDate]\n,[LastModifiedDate]\n,[IsActive]\n,[SourceSystemId]\n FROM [s2_m365].[dbo].[person]",
-					"metadata": {
-						"language": "sql"
-					},
-					"currentConnection": {
-						"databaseName": "s2_m365",
-						"poolName": "Built-in"
-					},
-					"resultLimit": 5000
-				},
-				"type": "SqlQuery"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 2')]",
-			"type": "Microsoft.Synapse/workspaces/sqlscripts",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"content": {
-					"query": "SELECT TOP (100) [DeviceName]\n,[ManagedBy]\n,[Ownership]\n,[OS]\n,[OSVersion]\n,[LastCheckIn]\n,[PrimaryUserUPN]\n,[DeviceID]\n FROM [s2_intune].[dbo].[devices]",
-					"metadata": {
-						"language": "sql"
-					},
-					"currentConnection": {
-						"databaseName": "s2_intune",
-						"poolName": "Built-in"
-					},
-					"resultLimit": 5000
-				},
-				"type": "SqlQuery"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 3')]",
-			"type": "Microsoft.Synapse/workspaces/sqlscripts",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"content": {
-					"query": "",
-					"metadata": {
-						"language": "sql"
-					},
-					"currentConnection": {
-						"databaseName": "s2_intune",
-						"poolName": "Built-in"
-					},
-					"resultLimit": 5000
-				},
-				"type": "SqlQuery"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 4')]",
-			"type": "Microsoft.Synapse/workspaces/sqlscripts",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"content": {
-					"query": "SELECT TOP (100) [DeviceName]\n,[ManagedBy]\n,[Ownership]\n,[OS]\n,[OSVersion]\n,[LastCheckIn]\n,[PrimaryUserUPN]\n,[DeviceID]\n FROM [s2_intune].[dbo].[devices]",
-					"metadata": {
-						"language": "sql"
-					},
-					"currentConnection": {
-						"databaseName": "s2_intune",
-						"poolName": "Built-in"
-					},
-					"resultLimit": 5000
-				},
-				"type": "SqlQuery"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 5')]",
-			"type": "Microsoft.Synapse/workspaces/sqlscripts",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"content": {
-					"query": "SELECT TOP (100) [DeviceName]\n,[ManagedBy]\n,[Ownership]\n,[Compliane]\n,[OS]\n,[OSVersion]\n,[LastCheckIn]\n,[PrimaryUserUPN]\n,[DeviceID]\n FROM [s2_m365_intune].[dbo].[devices]",
-					"metadata": {
-						"language": "sql"
-					},
-					"currentConnection": {
-						"databaseName": "s2_m365_intune",
-						"poolName": "Built-in"
-					},
-					"resultLimit": 5000
-				},
-				"type": "SqlQuery"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 6')]",
-			"type": "Microsoft.Synapse/workspaces/sqlscripts",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"content": {
-					"query": "SELECT TOP (100) [DeviceName]\n,[ManagedBy]\n,[Ownership]\n,[Compliance]\n,[OS]\n,[OSVersion]\n,[LastCheckIn]\n,[PrimaryUserUPN]\n,[DeviceID]\n FROM [s2_intune_aad].[dbo].[intune_devices]",
-					"metadata": {
-						"language": "sql"
-					},
-					"currentConnection": {
-						"databaseName": "s2_intune_aad",
-						"poolName": "Built-in"
-					},
-					"resultLimit": 5000
-				},
-				"type": "SqlQuery"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 7')]",
-			"type": "Microsoft.Synapse/workspaces/sqlscripts",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"content": {
-					"query": "SELECT TOP (100) *\n FROM [s2_intune_aad].[dbo].[aad_users]",
-					"metadata": {
-						"language": "sql"
-					},
-					"currentConnection": {
-						"databaseName": "s2_intune_aad",
-						"poolName": "Built-in"
-					},
-					"resultLimit": 5000
-				},
-				"type": "SqlQuery"
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/SQL script 8')]",
-			"type": "Microsoft.Synapse/workspaces/sqlscripts",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"content": {
-					"query": "SELECT TOP (100) [DeviceName]\n,[ManagedBy]\n,[Ownership]\n,[Compliane]\n,[OS]\n,[OSVersion]\n,[LastCheckIn]\n,[PrimaryUserUPN]\n,[DeviceID]\n FROM [s2_m365_intune].[dbo].[devices]",
-					"metadata": {
-						"language": "sql"
-					},
-					"currentConnection": {
-						"databaseName": "s2_m365_intune",
-						"poolName": "Built-in"
-					},
-					"resultLimit": 5000
-				},
-				"type": "SqlQuery"
-			},
-			"dependsOn": []
-		},
-		{
 			"name": "[concat(parameters('workspaceName'), '/AAD_Processor')]",
 			"type": "Microsoft.Synapse/workspaces/notebooks",
 			"apiVersion": "2019-06-01-preview",
@@ -5880,8 +5720,10 @@
 						"sparkVersion": "3.1",
 						"nodeCount": 3,
 						"cores": 4,
-						"memory": 28
-					}
+						"memory": 28,
+						"automaticScaleJobs": false
+					},
+					"sessionKeepAliveTimeout": 30
 				},
 				"cells": [
 					{
@@ -5928,7 +5770,7 @@
 							"%run /OEA_py"
 						],
 						"outputs": [],
-						"execution_count": 3
+						"execution_count": 2
 					},
 					{
 						"cell_type": "code",
@@ -5948,7 +5790,7 @@
 							"%run /example_modules_py"
 						],
 						"outputs": [],
-						"execution_count": 4
+						"execution_count": 3
 					},
 					{
 						"cell_type": "code",
@@ -5971,7 +5813,7 @@
 							"contoso_sis = ContosoSIS(oea, 'contoso_sis', False)"
 						],
 						"outputs": [],
-						"execution_count": 5
+						"execution_count": 4
 					},
 					{
 						"cell_type": "code",
@@ -5990,10 +5832,10 @@
 						"source": [
 							"# 1) Land data into stage1 of your data lake, from multiple source systems (this example copies in test data sets that came with the OEA installation).\r\n",
 							"contoso_sis.copy_test_data_to_stage1()\r\n",
-							"m365.copy_test_data_to_stage1()"
+							"#m365.copy_test_data_to_stage1()"
 						],
 						"outputs": [],
-						"execution_count": 4
+						"execution_count": 5
 					},
 					{
 						"cell_type": "code",
@@ -6017,7 +5859,7 @@
 							"m365.process_activity_data_from_stage1()"
 						],
 						"outputs": [],
-						"execution_count": 31
+						"execution_count": 6
 					},
 					{
 						"cell_type": "code",
@@ -6039,6 +5881,7 @@
 							"# Process sectionmark data. Convert id values to use the Person.Id and Section.Id values set in the m365 data.\r\n",
 							"sqlContext.registerDataFrameAsTable(spark.read.format('parquet').load(oea.stage2np + '/contoso_sis/studentsectionmark'), 'SectionMark')\r\n",
 							"sqlContext.registerDataFrameAsTable(spark.read.format('parquet').load(oea.stage2np + '/m365/Person'), 'Person')\r\n",
+							"sqlContext.registerDataFrameAsTable(spark.read.format('parquet').load(oea.stage2np + '/m365/PersonIdentifier'), 'PersonIdentifier')\r\n",
 							"sqlContext.registerDataFrameAsTable(spark.read.format('parquet').load(oea.stage2np + '/m365/Section'), 'Section')\r\n",
 							"df = spark.sql(\"select sm.id Id, p.Id PersonId, s.Id SectionId, cast(sm.numeric_grade_earned as int) NumericGrade, \\\r\n",
 							"sm.alpha_grade_earned AlphaGrade, sm.is_final_grade IsFinalGrade, cast(sm.credits_attempted as int) CreditsAttempted, cast(sm.credits_earned as int) CreditsEarned, \\\r\n",
@@ -6049,6 +5892,12 @@
 							"df.write.format('parquet').mode('overwrite').save(oea.stage2np + '/ContosoISD/SectionMark')\r\n",
 							"\r\n",
 							"sqlContext.registerDataFrameAsTable(spark.read.format('parquet').load(oea.stage2np + '/contoso_sis/studentdemographics'), 'Demographics')\r\n",
+							"df = spark.sql(\"select sd.SIS_ID ExternalId, p.Id PersonId, sd.FederalRaceCategory, sd.PrimaryLanguage, \\\r\n",
+							" sd.ELLStatus, sd.SpecialEducation, sd.LowIncome, sd.City_Region, pi.Identifier \\\r\n",
+							"from Demographics sd, Person p, PersonIdentifier pi \\\r\n",
+							"where sd.SIS_ID = p.ExternalId \\\r\n",
+							"and p.Id = pi.PersonId \\\r\n",
+							"and pi.Identifier like '%@%'\")\r\n",
 							"df.write.format('parquet').mode('overwrite').save(oea.stage2np + '/ContosoISD/StudentDemographics')\r\n",
 							"\r\n",
 							"# Repeat the above process, this time for student attendance\r\n",
@@ -6070,7 +5919,7 @@
 							"df.write.format('parquet').mode('overwrite').save(oea.stage2np + '/ContosoISD/Course')"
 						],
 						"outputs": [],
-						"execution_count": 32
+						"execution_count": 15
 					},
 					{
 						"cell_type": "code",
@@ -6109,7 +5958,7 @@
 							"print(f\"Created spark db's.\\nYou can now open the 'techInequityDashboardContoso v2.pbix' dashboard and change the datasource to point to: {oea.serverless_sql_endpoint}\")"
 						],
 						"outputs": [],
-						"execution_count": 8
+						"execution_count": 17
 					},
 					{
 						"cell_type": "markdown",
@@ -6156,6 +6005,25 @@
 						],
 						"outputs": [],
 						"execution_count": 8
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"spark.sql(\"DROP TABLE if exists s2_m365_intune.StudentDemographics\")"
+						],
+						"outputs": [],
+						"execution_count": 16
 					}
 				]
 			},
@@ -6399,14 +6267,29 @@
 			"properties": {
 				"nbformat": 4,
 				"nbformat_minor": 2,
+				"sessionProperties": {
+					"driverMemory": "28g",
+					"driverCores": 4,
+					"executorMemory": "28g",
+					"executorCores": 4,
+					"numExecutors": 2,
+					"conf": {
+						"spark.dynamicAllocation.enabled": "false",
+						"spark.dynamicAllocation.minExecutors": "2",
+						"spark.dynamicAllocation.maxExecutors": "2"
+					}
+				},
 				"metadata": {
+					"saveOutput": true,
+					"enableDebugMode": false,
 					"kernelspec": {
 						"name": "synapse_pyspark",
 						"display_name": "python"
 					},
 					"language_info": {
 						"name": "python"
-					}
+					},
+					"sessionKeepAliveTimeout": 30
 				},
 				"cells": [
 					{
@@ -6719,7 +6602,6 @@
 							"    def write(self, path_and_filename, data_str, format='csv'):\r\n",
 							"        mssparkutils.fs.append(f\"{self.root_destination}/{path_and_filename}\", data_str, True) # Set the last parameter as True to create the file if it does not exist"
 						],
-						"attachments": null,
 						"outputs": [],
 						"execution_count": null
 					}
