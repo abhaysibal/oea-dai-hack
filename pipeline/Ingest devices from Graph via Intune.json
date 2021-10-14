@@ -35,7 +35,7 @@
 						"additionalHeaders": {
 							"Content-Type": "application/json",
 							"Authorization": {
-								"value": "@concat('Bearer',activity('GetBearerToken').Output.access_token)",
+								"value": "@concat('Bearer ',activity('GetBearerToken').Output.access_token)",
 								"type": "Expression"
 							}
 						},
