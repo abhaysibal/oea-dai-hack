@@ -109,8 +109,8 @@
 					"timeout": "7.00:00:00",
 					"retry": 0,
 					"retryIntervalInSeconds": 30,
-					"secureOutput": true,
-					"secureInput": true
+					"secureOutput": false,
+					"secureInput": false
 				},
 				"userProperties": [],
 				"typeProperties": {
@@ -124,7 +124,7 @@
 						"Content-Type": "application/x-www-form-urlencoded"
 					},
 					"body": {
-						"value": "@concat('client_id=9ba597aa-96e0-4297-80ac-9ce9fe9c7504&scope =https://graph.microsoft.com/.default&grant_type=client_credentials&client_id=9ba597aa-96e0-4297-80ac-9ce9fe9c7504&client_secret=',activity('GetClientSecret').output.value)",
+						"value": "@grant_type=client_credentials&client_id=9ba597aa-96e0-4297-80ac-9ce9fe9c7504&resource=https://graph.microsoft.com&client_secret=activity('GetClientSecret').output.value\n",
 						"type": "Expression"
 					}
 				}
