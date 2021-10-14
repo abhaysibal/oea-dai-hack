@@ -5880,10 +5880,8 @@
 						"sparkVersion": "3.1",
 						"nodeCount": 3,
 						"cores": 4,
-						"memory": 28,
-						"automaticScaleJobs": false
-					},
-					"sessionKeepAliveTimeout": 30
+						"memory": 28
+					}
 				},
 				"cells": [
 					{
@@ -5930,7 +5928,7 @@
 							"%run /OEA_py"
 						],
 						"outputs": [],
-						"execution_count": 1
+						"execution_count": 3
 					},
 					{
 						"cell_type": "code",
@@ -5950,7 +5948,7 @@
 							"%run /example_modules_py"
 						],
 						"outputs": [],
-						"execution_count": 2
+						"execution_count": 4
 					},
 					{
 						"cell_type": "code",
@@ -5973,7 +5971,7 @@
 							"contoso_sis = ContosoSIS(oea, 'contoso_sis', False)"
 						],
 						"outputs": [],
-						"execution_count": 3
+						"execution_count": 5
 					},
 					{
 						"cell_type": "code",
@@ -6932,12 +6930,15 @@
 						"sparkVersion": "3.1",
 						"nodeCount": 3,
 						"cores": 4,
-						"memory": 28
-					}
+						"memory": 28,
+						"automaticScaleJobs": false
+					},
+					"sessionKeepAliveTimeout": 30
 				},
 				"cells": [
 					{
 						"cell_type": "code",
+						"metadata": {},
 						"source": [
 							"class ContosoSIS(BaseOEAModule):\r\n",
 							"    def __init__(self, oea, source_folder='contoso_sis', pseudonymize = True):\r\n",
@@ -6984,7 +6985,7 @@
 							"        mssparkutils.fs.cp(self.module_path + '/test_data/studentattendance.csv', self.stage1np + '/studentattendance/studentattendance.csv', True)\r\n",
 							"        mssparkutils.fs.cp(self.module_path + '/test_data/studentsectionmark.csv', self.stage1np + '/studentsectionmark/studentsectionmark.csv', True)\r\n",
 							"        mssparkutils.fs.cp(self.module_path + '/test_data/studentdemographics.csv', self.stage1np + '/studentdemographics/studentdemographics.csv', True)\r\n",
-							"        logger.warning(\"[OEA] Could not get list of folders in specified path\")\r\n",
+							"        logger.debug(\"[OEA] Could not get list of folders in specified path\")\r\n",
 							"\r\n",
 							"class M365(BaseOEAModule):\r\n",
 							"    \"\"\"\r\n",
