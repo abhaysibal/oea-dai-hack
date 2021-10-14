@@ -1,17 +1,20 @@
 {
 	"name": "IntuneReportsAPI",
-	"type": "Microsoft.Synapse/workspaces/linkedservices",
 	"properties": {
 		"annotations": [],
 		"type": "RestService",
 		"typeProperties": {
 			"url": "https://graph.microsoft.com/beta/deviceManagement/reports/exportJobs",
-			"enableServerCertificateValidation": true,
+			"enableServerCertificateValidation": false,
 			"authenticationType": "Anonymous",
 			"authHeaders": {
 				"Authorization": {
-					"type": "SecureString",
-					"value": "**********"
+					"type": "AzureKeyVaultSecret",
+					"store": {
+						"referenceName": "GraphVault",
+						"type": "LinkedServiceReference"
+					},
+					"secretName": "bearerToken"
 				}
 			}
 		},
@@ -19,5 +22,6 @@
 			"referenceName": "AutoResolveIntegrationRuntime",
 			"type": "IntegrationRuntimeReference"
 		}
-	}
+	},
+	"type": "Microsoft.Synapse/workspaces/linkedservices"
 }
