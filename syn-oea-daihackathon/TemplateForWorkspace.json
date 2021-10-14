@@ -5930,7 +5930,7 @@
 							"%run /OEA_py"
 						],
 						"outputs": [],
-						"execution_count": 3
+						"execution_count": 1
 					},
 					{
 						"cell_type": "code",
@@ -5950,7 +5950,7 @@
 							"%run /example_modules_py"
 						],
 						"outputs": [],
-						"execution_count": 4
+						"execution_count": 2
 					},
 					{
 						"cell_type": "code",
@@ -5973,7 +5973,7 @@
 							"contoso_sis = ContosoSIS(oea, 'contoso_sis', False)"
 						],
 						"outputs": [],
-						"execution_count": 5
+						"execution_count": 3
 					},
 					{
 						"cell_type": "code",
@@ -5995,7 +5995,7 @@
 							"#m365.copy_test_data_to_stage1()"
 						],
 						"outputs": [],
-						"execution_count": 8
+						"execution_count": 4
 					},
 					{
 						"cell_type": "code",
