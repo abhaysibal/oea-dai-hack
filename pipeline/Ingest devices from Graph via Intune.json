@@ -29,7 +29,7 @@
 						"requestInterval": "00.00:00:00.010",
 						"requestMethod": "POST",
 						"requestBody": {
-							"value": "{ \n    \"reportName\": \"Devices\", \n    \"select\": [ \n        \"DeviceId\",\n        \"DeviceName\", \n        \"DeviceType\",\n        \"managementAgent\", \n        \"OwnerType\", \n        \"ComplianceState\", \n        \"PrimaryUser\", \n        \"UserId\", \n        \"UPN\", \n        \"UserEmail\", \n        \"UserName\"\n    ]\n} ",
+							"value": "{ \n    \"reportName\": \"Devices\", \n    \"filter\":\"(OwnerType eq '1')\", \n    \"localizationType\": \"LocalizedValuesAsAdditionalColumn\", \n    \"select\": [ \n        \"DeviceName\", \n        \"managementAgent\", \n        \"ownerType\", \n        \"complianceState\", \n        \"OS\", \n        \"OSVersion\", \n        \"LastContact\", \n        \"UPN\", \n        \"DeviceId\" \n    ]\n} ",
 							"type": "Expression"
 						},
 						"additionalHeaders": {
