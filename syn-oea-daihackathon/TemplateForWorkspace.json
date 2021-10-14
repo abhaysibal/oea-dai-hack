@@ -5497,6 +5497,66 @@
 			"dependsOn": []
 		},
 		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 3')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "SELECT TOP (100) [EntryId]\n,[LastCheckIn]\n,[DeviceId]\n,[DeviceName]\n,[Compliant]\n,[IsManaged]\n,[OS]\n,[OSVersion]\n,[Ids]\n,[Ownership]\n,[OwnerIdentifier]\n FROM [s2_m365_intune].[dbo].[aad_devices]",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "s2_m365_intune",
+						"poolName": "Built-in"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script 4')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "SELECT TOP (100) [Id]\n,[Identifier]\n,[Description]\n,[RefIdentifierTypeId]\n,[ExternalId]\n,[CreateDate]\n,[LastModifiedDate]\n,[IsActive]\n,[PersonId]\n,[SourceSystemId]\n FROM [s2_m365_intune].[dbo].[personidentifier]",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "s2_m365_intune",
+						"poolName": "Built-in"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/SQL script to join al devices and SIS data')]",
+			"type": "Microsoft.Synapse/workspaces/sqlscripts",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"content": {
+					"query": "SELECT * FROM\n[s2_m365_intune].[dbo].[aad_users] u\nJOIN [s2_m365_intune].[dbo].[aad_devices] d\nON d.OwnerIdentifier = u.id\nJOIN [s2_m365_intune].[dbo].[studentdemographics] sd\nON sd.Identifier = userPrincipalName",
+					"metadata": {
+						"language": "sql"
+					},
+					"currentConnection": {
+						"databaseName": "s2_m365_intune_test",
+						"poolName": "Built-in"
+					},
+					"resultLimit": 5000
+				},
+				"type": "SqlQuery"
+			},
+			"dependsOn": []
+		},
+		{
 			"name": "[concat(parameters('workspaceName'), '/AAD_Processor')]",
 			"type": "Microsoft.Synapse/workspaces/notebooks",
 			"apiVersion": "2019-06-01-preview",
@@ -5570,7 +5630,7 @@
 							"%run /example_modules_py"
 						],
 						"outputs": [],
-						"execution_count": 4
+						"execution_count": 3
 					},
 					{
 						"cell_type": "code",
@@ -5619,7 +5679,7 @@
 							"        df = df.dropDuplicates(['DeviceId'])\r\n",
 							"        df = df.withColumn(\"OwnerIdentifier\", f.regexp_extract(df[\"Ids\"], \"GID]:(.*):\", 1))\r\n",
 							"        df.coalesce(1).write.format('parquet').mode('overwrite').option(\"mergeSchema\", \"true\").save(self.stage2np + '/aad/devices')\r\n",
-							"        \r\n",
+							"\r\n",
 							"        logger.info(\"Processing Azure AD users data from: \" + self.stage1np)\r\n",
 							"        spark_schema = self.oea.to_spark_schema(self.schemas['AAD_Users'])\r\n",
 							"        df = spark.read.csv(self.stage1np_aad + '/users/users.csv', header='true', schema=spark_schema)\r\n",
@@ -5631,7 +5691,7 @@
 							""
 						],
 						"outputs": [],
-						"execution_count": 23
+						"execution_count": 4
 					},
 					{
 						"cell_type": "code",
@@ -5651,7 +5711,7 @@
 							"intune_aad = IntuneAADPackage(oea)"
 						],
 						"outputs": [],
-						"execution_count": 24
+						"execution_count": 5
 					},
 					{
 						"cell_type": "code",
@@ -5670,7 +5730,7 @@
 							"intune_aad.process_devices_data_from_stage1()"
 						],
 						"outputs": [],
-						"execution_count": 25
+						"execution_count": 6
 					},
 					{
 						"cell_type": "code",
@@ -5692,7 +5752,7 @@
 							"spark.sql(\"create table if not exists s2_m365_intune.aad_users using PARQUET location '\" + oea.stage2np + \"/m365/aad/users'\")"
 						],
 						"outputs": [],
-						"execution_count": 1
+						"execution_count": 7
 					},
 					{
 						"cell_type": "code",
@@ -5712,165 +5772,7 @@
 							"#spark.sql('create table if not exists s2_intune_aad.intune_aad_data as select * from s2_intune_aad.aad_devices d, s2_intune_aad.aad_users u where u.id = d.deviceId')"
 						],
 						"outputs": [],
-						"execution_count": 26
-					}
-				]
-			},
-			"dependsOn": []
-		},
-		{
-			"name": "[concat(parameters('workspaceName'), '/AAD_Processor_WithSISReplacement')]",
-			"type": "Microsoft.Synapse/workspaces/notebooks",
-			"apiVersion": "2019-06-01-preview",
-			"properties": {
-				"nbformat": 4,
-				"nbformat_minor": 2,
-				"bigDataPool": {
-					"referenceName": "spark3p1sm",
-					"type": "BigDataPoolReference"
-				},
-				"sessionProperties": {
-					"driverMemory": "28g",
-					"driverCores": 4,
-					"executorMemory": "28g",
-					"executorCores": 4,
-					"numExecutors": 4,
-					"conf": {
-						"spark.dynamicAllocation.enabled": "false",
-						"spark.dynamicAllocation.minExecutors": "4",
-						"spark.dynamicAllocation.maxExecutors": "4"
-					}
-				},
-				"metadata": {
-					"saveOutput": true,
-					"enableDebugMode": false,
-					"kernelspec": {
-						"name": "synapse_pyspark",
-						"display_name": "Synapse PySpark"
-					},
-					"language_info": {
-						"name": "python"
-					},
-					"a365ComputeOptions": {
-						"id": "/subscriptions/7b9a4896-4541-483f-bdc7-d8f4ec6be3ee/resourceGroups/rg-oea-daihackathon/providers/Microsoft.Synapse/workspaces/syn-oea-daihackathon/bigDataPools/spark3p1sm",
-						"name": "spark3p1sm",
-						"type": "Spark",
-						"endpoint": "https://syn-oea-daihackathon.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/spark3p1sm",
-						"auth": {
-							"type": "AAD",
-							"authResource": "https://dev.azuresynapse.net"
-						},
-						"sparkVersion": "3.1",
-						"nodeCount": 3,
-						"cores": 4,
-						"memory": 28
-					}
-				},
-				"cells": [
-					{
-						"cell_type": "code",
-						"source": [
-							"%run /OEA_py"
-						],
-						"outputs": [],
-						"execution_count": 1
-					},
-					{
-						"cell_type": "code",
-						"metadata": {
-							"jupyter": {
-								"source_hidden": false,
-								"outputs_hidden": false
-							},
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							}
-						},
-						"source": [
-							"%run /example_modules_py"
-						],
-						"outputs": [],
-						"execution_count": 2
-					},
-					{
-						"cell_type": "code",
-						"metadata": {
-							"jupyter": {
-								"source_hidden": false,
-								"outputs_hidden": false
-							},
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							}
-						},
-						"source": [
-							"%run /AAD_Processor"
-						],
-						"outputs": [],
-						"execution_count": 24
-					},
-					{
-						"cell_type": "code",
-						"metadata": {
-							"jupyter": {
-								"source_hidden": false,
-								"outputs_hidden": false
-							},
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							}
-						},
-						"source": [
-							"import IntuneAADPackage\r\n",
-							"\r\n",
-							"class RecombinantDataReplacer(BaseOEAModule):\r\n",
-							"    def __init__(self, oea, m365, source_folder='m365'):\r\n",
-							"        BaseOEAModule.__init__(self, oea, source_folder)\r\n",
-							"        self.stage1np_devices = self.stage1np + '/m365/AAD/devices'\r\n",
-							"        self.stage1np_users = self.stage1np + '/m365/AAD/devices'\r\n",
-							"        self.stage1np_roster = self.stage1np + '/test_data/DIPData/Roster/'\r\n",
-							"    \r\n",
-							"    def replace_identifier_in_aad_devices_table(self):\r\n",
-							"        personidentifier_path = self.stage1np_roster + '/PersonIdentifier.csv'\r\n",
-							"        spark_schema = self.oea.to_spark_schema(m365.schemas['PersonIdentifier'])\r\n",
-							"        df = spark.read.csv(personidentifier_path, header='false', schema=spark_schema)\r\n",
-							"        print(df.count())\r\n",
-							"    \r\n",
-							"    def replace_identifier_in_aad_users_table(self):\r\n",
-							"        pass\r\n",
-							""
-						],
-						"outputs": [],
-						"execution_count": 22
-					},
-					{
-						"cell_type": "code",
-						"metadata": {
-							"jupyter": {
-								"source_hidden": false,
-								"outputs_hidden": false
-							},
-							"nteract": {
-								"transient": {
-									"deleting": false
-								}
-							}
-						},
-						"source": [
-							"oea = OEA()\r\n",
-							"m365 = M365(oea)\r\n",
-							"aad = Intune\r\n",
-							"replacer = RecombinantDataReplacer(oea, m365)\r\n",
-							"replacer.replace_identifier_in_aad_devices_table()"
-						],
-						"outputs": [],
-						"execution_count": 20
+						"execution_count": 8
 					}
 				]
 			},
@@ -6338,7 +6240,7 @@
 							"\r\n",
 							"    def process_devices_data_from_stage1(self):\r\n",
 							"        logger.info(\"Processing intune reports data from: \" + self.stage1np)\r\n",
-							"        spark_schema = self.oea.to_spark_schema(self.schemas['Devices'])\r\n",
+							"        spark_schema = self.oea.to_spark_schema(self.schemas['Intune_Devices'])\r\n",
 							"        df = spark.read.csv(self.stage1np_devices + '/*.csv', header='true', schema=spark_schema)\r\n",
 							"        df = df.dropDuplicates(['DeviceID'])\r\n",
 							"        df.coalesce(1).write.format('parquet').mode('overwrite').option(\"mergeSchema\", \"true\").save(self.stage2np + '/intune/devices')\r\n",
@@ -6947,6 +6849,298 @@
 						"source": [
 							""
 						]
+					}
+				]
+			},
+			"dependsOn": []
+		},
+		{
+			"name": "[concat(parameters('workspaceName'), '/RecombinantSISDataReplacer')]",
+			"type": "Microsoft.Synapse/workspaces/notebooks",
+			"apiVersion": "2019-06-01-preview",
+			"properties": {
+				"nbformat": 4,
+				"nbformat_minor": 2,
+				"bigDataPool": {
+					"referenceName": "spark3p1sm",
+					"type": "BigDataPoolReference"
+				},
+				"sessionProperties": {
+					"driverMemory": "28g",
+					"driverCores": 4,
+					"executorMemory": "28g",
+					"executorCores": 4,
+					"numExecutors": 4,
+					"conf": {
+						"spark.dynamicAllocation.enabled": "false",
+						"spark.dynamicAllocation.minExecutors": "4",
+						"spark.dynamicAllocation.maxExecutors": "4"
+					}
+				},
+				"metadata": {
+					"saveOutput": true,
+					"enableDebugMode": false,
+					"kernelspec": {
+						"name": "synapse_pyspark",
+						"display_name": "Synapse PySpark"
+					},
+					"language_info": {
+						"name": "python"
+					},
+					"a365ComputeOptions": {
+						"id": "/subscriptions/7b9a4896-4541-483f-bdc7-d8f4ec6be3ee/resourceGroups/rg-oea-daihackathon/providers/Microsoft.Synapse/workspaces/syn-oea-daihackathon/bigDataPools/spark3p1sm",
+						"name": "spark3p1sm",
+						"type": "Spark",
+						"endpoint": "https://syn-oea-daihackathon.dev.azuresynapse.net/livyApi/versions/2019-11-01-preview/sparkPools/spark3p1sm",
+						"auth": {
+							"type": "AAD",
+							"authResource": "https://dev.azuresynapse.net"
+						},
+						"sparkVersion": "3.1",
+						"nodeCount": 3,
+						"cores": 4,
+						"memory": 28,
+						"automaticScaleJobs": false
+					},
+					"sessionKeepAliveTimeout": 30
+				},
+				"cells": [
+					{
+						"cell_type": "code",
+						"metadata": {},
+						"source": [
+							"%run /OEA_py"
+						],
+						"outputs": [],
+						"execution_count": 1
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"%run /example_modules_py"
+						],
+						"outputs": [],
+						"execution_count": 4
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"%run /AAD_Processor"
+						],
+						"outputs": [],
+						"execution_count": 5
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"%run Intune_Processor"
+						],
+						"outputs": [],
+						"execution_count": 8
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"from pyspark.sql.functions import monotonically_increasing_id, row_number\r\n",
+							"from pyspark.sql.functions import col\r\n",
+							"from pyspark.sql.window import Window\r\n",
+							"\r\n",
+							"class RecombinantDataReplacer(BaseOEAModule):\r\n",
+							"    def __init__(self, oea, m365, aad, intune, source_folder='m365'):\r\n",
+							"        BaseOEAModule.__init__(self, oea, source_folder)\r\n",
+							"        self.stage1np_devices = self.stage1np + '/AAD/devices'\r\n",
+							"        self.stage1np_users = self.stage1np + '/AAD/users'\r\n",
+							"        self.stage1np_roster = self.stage1np + '/test_data/DIPData/Roster/'\r\n",
+							"        self.stage1np_intune = self.stage1np + '/intune/devices/'\r\n",
+							"\r\n",
+							"    def replace_identifier_in_aad_devices_and_users_table(self):\r\n",
+							"        personidentifier_path = self.stage1np_roster + '/PersonIdentifier.csv'\r\n",
+							"        spark_schema = self.oea.to_spark_schema(m365.schemas['PersonIdentifier'])\r\n",
+							"        personidentifier_df = spark.read.csv(personidentifier_path, header='false', schema=spark_schema)\r\n",
+							"\r\n",
+							"        person_path = self.stage1np_roster + '/Person.csv'\r\n",
+							"        spark_schema = self.oea.to_spark_schema(m365.schemas['PersonIdentifier'])\r\n",
+							"        person_df = spark.read.csv(personidentifier_path, header='false', schema=spark_schema)\r\n",
+							"\r\n",
+							"        aadusers_path = self.stage1np_users + \"/users.csv\"\r\n",
+							"        spark_schema = self.oea.to_spark_schema(aad.schemas['AAD_Users'])\r\n",
+							"        aadusers_df = spark.read.csv(aadusers_path, header='true')\r\n",
+							"\r\n",
+							"        aaddevices_path = self.stage1np_devices + \"/devices.csv\"\r\n",
+							"        spark_schema = self.oea.to_spark_schema(aad.schemas['AAD_Devices'])\r\n",
+							"        aaddevices_df = spark.read.csv(aaddevices_path, header='true')\r\n",
+							"\r\n",
+							"        intunedevices_path = self.stage1np_intune + \"/devices.csv\"\r\n",
+							"        spark_schema = self.oea.to_spark_schema(intune.schemas['Intune_Devices'])\r\n",
+							"        intunedevices_df = spark.read.csv(intunedevices_path, header='true')\r\n",
+							"\r\n",
+							"        #print(df.select(\"Identifier\").show())\r\n",
+							"        aadusers_df = aadusers_df.limit(min(personidentifier_df.count(), aadusers_df.count()))\r\n",
+							"\r\n",
+							"        aadusers_df=aadusers_df.withColumn('row_index', row_number().over(Window.orderBy(monotonically_increasing_id())))\r\n",
+							"        aaddevices_df=aaddevices_df.withColumn('row_index', row_number().over(Window.orderBy(monotonically_increasing_id())))\r\n",
+							"        personidentifier_df=personidentifier_df.withColumn('row_index', row_number().over(Window.orderBy(monotonically_increasing_id())))\r\n",
+							"        person_df=personidentifier_df.withColumn('row_index', row_number().over(Window.orderBy(monotonically_increasing_id())))\r\n",
+							"        intunedevices_df=intunedevices_df.withColumn('row_index', row_number().over(Window.orderBy(monotonically_increasing_id())))\r\n",
+							"\r\n",
+							"        aadusers_df = aadusers_df.join(personidentifier_df, on=[\"row_index\"]).drop(\"row_index\")\r\n",
+							"        aadusers_df = aadusers_df.select(\r\n",
+							"            col(\"givenName\").alias(\"givenName\"),\r\n",
+							"            col(\"surname\").alias(\"surname\"),\r\n",
+							"            col(\"Identifier\").alias(\"userPrincipalName\"),\r\n",
+							"            col(\"PersonId\").alias(\"id\")).filter(aadusers_df.Identifier.contains(\"@\"))\r\n",
+							"        \r\n",
+							"        aaddevices_df = aaddevices_df.join(personidentifier_df, on=[\"row_index\"]).drop(\"row_index\")\r\n",
+							"\r\n",
+							"        aaddevices_df = aaddevices_df.select(\r\n",
+							"            col(\"EntryId\").alias(\"EntryId\"),\r\n",
+							"            col(\"LastCheckIn\").alias(\"LastCheckIn\"),\r\n",
+							"            col(\"DeviceId\").alias(\"DeviceId\"),\r\n",
+							"            col(\"DeviceName\").alias(\"DeviceName\"),\r\n",
+							"            col(\"Compliant\").alias(\"Compliant\"),\r\n",
+							"            col(\"IsManaged\").alias(\"IsManaged\"),\r\n",
+							"            col(\"OS\").alias(\"OS\"),\r\n",
+							"            col(\"OSVersion\").alias(\"OSVersion\"),\r\n",
+							"            col(\"PersonId\").alias(\"Ids\"),\r\n",
+							"            col(\"Ownership\").alias(\"Ownership\"),\r\n",
+							"            col(\"PersonId\").alias(\"OwnerIdentifier\")).filter(aaddevices_df.Identifier.contains(\"@\"))\r\n",
+							"\r\n",
+							"        intunedevices_df = intunedevices_df.join(personidentifier_df, on=[\"row_index\"]).drop(\"row_index\")\r\n",
+							"        print(intunedevices_df.show())\r\n",
+							"\r\n",
+							"        #aadusers_df.coalesce(1).write.format('csv').mode('overwrite').option(\"mergeSchema\", \"true\").option(\"header\", \"true\").save(self.stage1np_users + '/sis_recombined/')\r\n",
+							"        #aaddevices_df.coalesce(1).write.format('csv').mode('overwrite').option(\"mergeSchema\", \"true\").option(\"header\", \"true\").save(self.stage1np_devices + '/sis_recombined/')\r\n",
+							"\r\n",
+							"    def process_devices_and_users_data_from_stage1(self):        \r\n",
+							"        logger.info(\"Processing Azure AD Device data from: \" + self.stage1np_devices+\"/sis_recombined/\")\r\n",
+							"        df = spark.read.csv(self.stage1np_devices + '/sis_recombined/*.csv', header='true')\r\n",
+							"        df = df.dropDuplicates(['DeviceId'])\r\n",
+							"        df.coalesce(1).write.format('parquet').mode('overwrite').option(\"mergeSchema\", \"true\").save(self.stage2np + '/aad/devices')\r\n",
+							"\r\n",
+							"        logger.info(\"Processing Azure AD users data from: \" + self.stage1np_users+\"/sis_recombined/\")\r\n",
+							"        spark_schema = self.oea.to_spark_schema(aad.schemas['AAD_Users'])\r\n",
+							"        df = spark.read.csv(self.stage1np_users + '/sis_recombined/*.csv', header='true', schema=spark_schema)\r\n",
+							"        df = df.dropDuplicates(['id'])\r\n",
+							"        df.coalesce(1).write.format('parquet').mode('overwrite').option(\"mergeSchema\", \"true\").save(self.stage2np + '/aad/users')\r\n",
+							""
+						],
+						"outputs": [],
+						"execution_count": 2
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							""
+						],
+						"outputs": [],
+						"execution_count": 89
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"oea = OEA()\r\n",
+							"m365 = M365(oea)\r\n",
+							"aad = IntuneAADPackage(oea)\r\n",
+							"intune = IntuneModule()\r\n",
+							"replacer = RecombinantDataReplacer(oea, m365, aad, intune)\r\n",
+							"replacer.replace_identifier_in_aad_devices_and_users_table()\r\n",
+							"replacer.process_devices_and_users_data_from_stage1()"
+						],
+						"outputs": [],
+						"execution_count": 3
+					},
+					{
+						"cell_type": "code",
+						"metadata": {
+							"jupyter": {
+								"source_hidden": false,
+								"outputs_hidden": false
+							},
+							"nteract": {
+								"transient": {
+									"deleting": false
+								}
+							}
+						},
+						"source": [
+							"# If doing a push to Test Db uncomment below line, and replace s2_m365_intune with s2_m365_intune_test\r\n",
+							"#spark.sql('CREATE DATABASE IF NOT EXISTS s2_m365_intune_test')\r\n",
+							"\r\n",
+							"# Uncomment below 2 lines if doing a rerun\r\n",
+							"#spark.sql(\"drop table s2_m365_intune.aad_devices\")\r\n",
+							"spark.sql(\"drop table s2_m365_intune.aad_users\")\r\n",
+							"\r\n",
+							"spark.sql(\"create table if not exists s2_m365_intune.aad_devices using PARQUET location '\" + oea.stage2np + \"/m365/aad/devices'\")\r\n",
+							"spark.sql(\"create table if not exists s2_m365_intune.aad_users using PARQUET location '\" + oea.stage2np + \"/m365/aad/users'\")"
+						],
+						"outputs": [],
+						"execution_count": 93
 					}
 				]
 			},
